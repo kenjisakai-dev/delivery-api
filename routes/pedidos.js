@@ -120,7 +120,7 @@ router.get("/valorTotalClientes/:cliente", async (req, res) => {
   }
 });
 
-//7. consultar valor total produto - ok
+// 7. consultar valor total produto - ok
 router.get("/valorTotalProduto/:produto", async (req, res) => {
   try {
     const listaPedidos = JSON.parse(await readFile("pedidos.json"));
@@ -138,15 +138,17 @@ router.get("/valorTotalProduto/:produto", async (req, res) => {
   }
 });
 
-// 8.
-router.get("/produtosMaisVendidos", async (req, res) => {
+// 8. produtos mais vendidos
+router.get("/produtosMaisVendidos", async (_, res) => {
   try {
     const listaPedidos = JSON.parse(await readFile("pedidos.json"));
 
     // pega todos os pedidos
     const produtos = [];
     listaPedidos.pedidos.forEach((pedido) => {
-      produtos.push(pedido.produto);
+      if (pedido.entregue === true) {
+        produtos.push(pedido.produto);
+      }
     });
 
     // pega todos os pedidos e tira as duplicatas
@@ -178,7 +180,13 @@ router.get("/produtosMaisVendidos", async (req, res) => {
         return -1;
       }
     });
-    res.send(qntProdutos.slice(0, 3));
+    const valores = qntProdutos.slice(0, 3);
+
+    const arrayFinal = [];
+    valores.forEach((pedido) => {
+      arrayFinal.push(`${pedido.produto} - ${pedido.qnt}`);
+    });
+    res.send(arrayFinal);
   } catch (error) {
     res.status(400).send({ erro: error.message });
   }
