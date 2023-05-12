@@ -1,6 +1,6 @@
 # Delivery-api
 
-## Crud Delivery API manipula os pedidos de delivery de um restaurante
+## Crud Delivery API manipula os pedidos de delivery
 
 ### Funcionalidades
 
@@ -16,7 +16,7 @@ POST (http://localhost:3005/pedido)
 ```
 
 Atualizar pedido<br>
-POST (http://localhost:3005/pedido)
+PUT (http://localhost:3005/pedido)
 
 ```json
 {
@@ -29,11 +29,11 @@ POST (http://localhost:3005/pedido)
 ```
 
 Atualizar o status de entrega do pedido<br>
-POST (http://localhost:3005/pedido/entregue)
+PATCH (http://localhost:3005/pedido/entregue)
 
 ```json
 {
-  "id": 53
+  "id": 1
   "entregue": true
 }
 ```
@@ -77,16 +77,18 @@ nodemon index.js
 
 Pronto, agora podemos usar o endpoints
 
+Também podemos usar a API com o graphQL
+
 ---
 
 ### FrameWorks Usados
 
 - express
 - nodemon
+- winston
 - express-graphql
 - graphql
 - swagger-ui-express
-- winston
 
 ---
 
