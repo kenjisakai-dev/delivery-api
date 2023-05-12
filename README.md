@@ -5,7 +5,7 @@
 ### Funcionalidades
 
 Criar pedido<br>
-POST (http://localhost:3030/pedido)
+POST (http://localhost:3005/pedido)
 
 ```json
 {
@@ -15,17 +15,34 @@ POST (http://localhost:3030/pedido)
 }
 ```
 
-Encerrar conta<br>
-DELETE (http://localhost:3030/account/{id})
+Atualizar pedido<br>
+POST (http://localhost:3005/pedido)
+
+```json
+{
+  "id": 53
+  "cliente": "Kenji",
+  "produto": "Pizza de Queijo",
+  "valor": 63,
+  "entregue": false
+}
+```
+
+Atualizar o status de entrega do pedido<br>
+POST (http://localhost:3005/pedido)
+
+```json
+{
+  "id": 53
+  "entregue": true
+}
+```
+Cancelar pedido<br>
+DELETE (http://localhost:3005/pedido/{id})
 
 Consultar o saldo de todas as contas<br>
 GET (http://localhost:3030/account)
 
-Consultar o saldo da conta<br>
-GET (http://localhost:3030/account/{id})
-
-Atualizar o cadastro da conta<br>
-PUT (http://localhost:3030/account)
 
 ```json
 {
