@@ -1,6 +1,6 @@
 # Delivery-api
 
-## Crud Delivery API tem a funcionalidade de controlar uma lista de pedidos
+## Crud Delivery API manipula os pedidos de delivery de um restaurante
 
 ### Funcionalidades
 
@@ -20,16 +20,16 @@ POST (http://localhost:3005/pedido)
 
 ```json
 {
-  "id": 53
+  "id": 1
   "cliente": "Kenji",
-  "produto": "Pizza de Queijo",
-  "valor": 63,
+  "produto": "Pizza Calabresa",
+  "valor": 65,
   "entregue": false
 }
 ```
 
 Atualizar o status de entrega do pedido<br>
-POST (http://localhost:3005/pedido)
+POST (http://localhost:3005/pedido/entregue)
 
 ```json
 {
@@ -40,33 +40,24 @@ POST (http://localhost:3005/pedido)
 Cancelar pedido<br>
 DELETE (http://localhost:3005/pedido/{id})
 
-Consultar o saldo de todas as contas<br>
-GET (http://localhost:3030/account)
+Consultar pedido<br>
+GET (http://localhost:3005/pedido/{id})
 
+Consultar o valor total de pedidos entregues de um cliente<br>
+GET (http://localhost:3005/pedido?cliente=Kenji Sakai)
 
-```json
-{
-  "id": 1,
-  "name": "Kenji Sakai",
-  "balance": 586
-}
-```
+Consultar o valor total de pedidos entregues de um produto<br>
+GET (http://localhost:3005/pedido?produto=Pizza Calabresa)
 
-Fazer o depósito e saque na conta<br>
-PATCH (http://localhost:3030/account/updateBalance)
+Consultar os produtos mais pedidos<br>
+GET (http://localhost:3005/pedido/produtos/mais/vendidos)
 
-```json
-{
-  "id": 1,
-  "balance": 758
-}
-```
 
 ---
 
 ### Documentação swagger da API
 
-(http://localhost:3030/docs)
+(http://localhost:3005/docs)
 
 ---
 
@@ -90,7 +81,6 @@ Pronto, agora podemos usar o endpoints
 
 ### FrameWorks Usados
 
-- cors
 - express
 - nodemon
 - express-graphql
@@ -107,12 +97,15 @@ Formato do arquivo accounts.json
 ```json
 {
   "nextId": 2,
-  "accounts": [
+  "pedidos": [
     {
       "id": 1,
-      "name": "Kenji",
-      "balance": 758
-    }
-  ]
+      "cliente": "Kenji",
+      "produto": "Pizza Calabresa",
+      "valor": 65,
+      "entregue": true,
+      "timestamp": "02/05/2021, 19:48:09"
+    },
+  ],
 }
 ```
