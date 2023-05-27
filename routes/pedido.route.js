@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/', PedidoController.createPedido);
 router.put('/', PedidoController.updatePedido);
 router.patch('/entregue', PedidoController.updateEntregue);
-router.delete('/:id', PedidoController.deletePedido);
+router.delete('/cancelar/:id', PedidoController.deletePedido);
 router.get('/:id', PedidoController.getPedido);
 router.get('/', PedidoController.getConsultaValorTotal);
 router.get('/produtos/mais/vendidos', PedidoController.getProdutosMaisVendidos);

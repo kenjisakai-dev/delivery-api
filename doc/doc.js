@@ -223,7 +223,7 @@ export const swaggerDocument = {
         },
       },
     },
-    '/pedido/{id}': {
+    '/pedido/cancelar/{id}': {
       delete: {
         tags: ['pedido'],
         summary: 'Excluir pedido existente',

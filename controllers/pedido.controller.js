@@ -61,7 +61,7 @@ async function deletePedido(req, res, next) {
     await PedidoService.deletePedido(req.params.id);
 
     res.send(`O Produto de ID ${req.params.id} foi deletado.`);
-    global.logger.info(`DELETE /pedido/${req.params.id}`);
+    global.logger.info(`DELETE /pedido/cancelar/${req.params.id}`);
   } catch (err) {
     next(err);
   }
