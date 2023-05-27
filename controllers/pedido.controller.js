@@ -3,8 +3,9 @@ import PedidoService from '../services/pedido.service.js';
 async function createPedido(req, res, next) {
   try {
     let pedido = req.body;
+    const { cliente, produto, valor } = pedido;
 
-    if (!pedido.cliente || !pedido.produto || !pedido.valor) {
+    if (!cliente || !produto || valor == null) {
       throw new Error(`Cliente, Produto e Valor são obrigatórios.`);
     }
 
@@ -20,14 +21,9 @@ async function createPedido(req, res, next) {
 async function updatePedido(req, res, next) {
   try {
     let pedido = req.body;
+    const { id, cliente, produto, valor, entregue } = pedido;
 
-    if (
-      !pedido.id ||
-      !pedido.cliente ||
-      !pedido.produto ||
-      pedido.valor == null ||
-      pedido.entregue == null
-    ) {
+    if (!id || !cliente || !produto || valor == null || entregue == null) {
       throw new Error(
         `O ID do pedido, Cliente, Produto, Valor e Entregue são obrigatórios.`
       );
@@ -45,8 +41,9 @@ async function updatePedido(req, res, next) {
 async function updateEntregue(req, res, next) {
   try {
     let pedido = req.body;
+    const { id, entregue } = pedido;
 
-    if (!pedido.id || pedido.entregue == null) {
+    if (!id || entregue == null) {
       throw new Error(`O ID do Pedido e Entregue são obrigatórios.`);
     }
 

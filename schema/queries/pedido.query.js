@@ -13,10 +13,6 @@ const PedidoQueries = {
     },
     resolve: (_, args) => PedidoService.getPedido(args.id),
   },
-  getProdutosMaisVendidos: {
-    type: new GraphQLList(GraphQLString),
-    resolve: () => PedidoService.getProdutosMaisVendidos(),
-  },
   getConsultaValorTotal: {
     type: GraphQLFloat,
     args: {
@@ -31,6 +27,10 @@ const PedidoQueries = {
     },
     resolve: (_, args) =>
       PedidoService.getConsultaValorTotal(args.cliente, args.produto),
+  },
+  getProdutosMaisVendidos: {
+    type: new GraphQLList(GraphQLString),
+    resolve: () => PedidoService.getProdutosMaisVendidos(),
   },
 };
 

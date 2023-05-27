@@ -26,12 +26,12 @@ async function updatePedido(pedido) {
 
   const index = data.pedidos.findIndex((p) => p.id === parseInt(pedido.id));
 
-  const pedidoFinded = data.pedidos[index];
+  const encontrarPedido = data.pedidos[index];
 
-  pedidoFinded.cliente = pedido.cliente;
-  pedidoFinded.produto = pedido.produto;
-  pedidoFinded.valor = pedido.valor;
-  pedidoFinded.entregue = pedido.entregue;
+  encontrarPedido.cliente = pedido.cliente;
+  encontrarPedido.produto = pedido.produto;
+  encontrarPedido.valor = pedido.valor;
+  encontrarPedido.entregue = pedido.entregue;
 
   await writeFile('pedidos.json', JSON.stringify(data, null, 2));
 
