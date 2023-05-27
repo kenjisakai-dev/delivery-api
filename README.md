@@ -39,7 +39,7 @@ PATCH (http://localhost:3005/pedido/entregue)
 ```
 
 Cancelar pedido<br>
-DELETE (http://localhost:3005/pedido/{id})
+DELETE (http://localhost:3005/pedido/cancelar/{id})
 
 Consultar pedido<br>
 GET (http://localhost:3005/pedido/{id})
