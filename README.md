@@ -147,7 +147,7 @@ Consultar o valor total de pedidos entregues de um produto<br>
 
 ```bash
 {
-  getConsultaValorTotal(produto: "Pizza Frango com Catupiry")
+  getConsultaValorTotal(produto: "Pizza de 4 Queijo")
 }
 ```
 
