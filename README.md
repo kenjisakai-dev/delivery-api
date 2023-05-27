@@ -1,6 +1,6 @@
 # Delivery-api
 
-## Crud Delivery API manipula os pedidos de delivery
+## Crud Delivery API manipula os pedidos delivery
 
 ### Funcionalidades
 
@@ -9,9 +9,9 @@ POST (http://localhost:3005/pedido)
 
 ```json
 {
-  "cliente": "Kenji",
-  "produto": "Pizza de Queijo",
-  "valor": 63
+  "cliente": "Kenji Sakai",
+  "produto": "Pizza de 4 Queijo",
+  "valor": 78.65
 }
 ```
 
@@ -21,9 +21,9 @@ PUT (http://localhost:3005/pedido)
 ```json
 {
   "id": 1
-  "cliente": "Kenji",
-  "produto": "Pizza Calabresa",
-  "valor": 65,
+  "cliente": "Kenji Sakai",
+  "produto": "Pizza de 4 Queijo",
+  "valor": 80.85,
   "entregue": false
 }
 ```
@@ -37,6 +37,7 @@ PATCH (http://localhost:3005/pedido/entregue)
   "entregue": true
 }
 ```
+
 Cancelar pedido<br>
 DELETE (http://localhost:3005/pedido/{id})
 
@@ -44,20 +45,119 @@ Consultar pedido<br>
 GET (http://localhost:3005/pedido/{id})
 
 Consultar o valor total de pedidos entregues de um cliente<br>
-GET (http://localhost:3005/pedido?cliente=Kenji Sakai)
+GET (http://localhost:3005/pedido?cliente={Kenji Sakai})
 
 Consultar o valor total de pedidos entregues de um produto<br>
-GET (http://localhost:3005/pedido?produto=Pizza Calabresa)
+GET (http://localhost:3005/pedido?produto={Pizza de 4 Queijo})
 
 Consultar os produtos mais pedidos<br>
 GET (http://localhost:3005/pedido/produtos/mais/vendidos)
 
+### Também podemos usar o GraphQL (http://localhost:3005/graphql)
+Criar pedido<br>
 
----
+```bash
+mutation {
+  createPedido(pedido: {
+    cliente: "Kenji Sakai"
+    produto: "Pizza de 4 Queijo"
+    valor: 78.65
+  }) {
+    id
+    cliente
+    produto
+    valor
+    entregue
+    timestamp
+  }
+}
+```
 
-### Documentação swagger da API
+Atualizar pedido<br>
 
-(http://localhost:3005/docs)
+```bash
+mutation {
+  updatePedido(pedido: {
+    id: 1,
+    cliente: "Kenji Sakai"
+    produto: "Pizza de 4 Queijo"
+    valor: 80.85
+    entregue: false
+  }) {
+    id
+    cliente
+    produto
+    valor
+    entregue
+    timestamp
+  }
+}
+```
+
+Atualizar o status de entrega do pedido<br>
+
+```bash
+mutation {
+  updateEntregue(pedido: {
+    id: 565,
+    entregue: true
+  }) {
+    id
+    cliente
+    produto
+    valor
+    entregue
+    timestamp
+  }
+}
+```
+
+Cancelar pedido<br>
+
+```bash
+mutation {
+  deletePedido(id: 2)
+}
+```
+
+Consultar pedido<br>
+
+```bash
+{
+  getPedido(id: 1) {
+    id
+    cliente
+    produto
+    valor
+    entregue
+    timestamp
+  }
+}
+```
+
+Consultar o valor total de pedidos entregues de um cliente<br>
+
+```bash
+{
+  getConsultaValorTotal(cliente: "Kenji Sakai")
+}
+```
+
+Consultar o valor total de pedidos entregues de um produto<br>
+
+```bash
+{
+  getConsultaValorTotal(produto: "Pizza Frango com Catupiry")
+}
+```
+
+Consultar os produtos mais pedidos<br>
+
+```bash
+{
+  getProdutosMaisVendidos
+}
+```
 
 ---
 
@@ -72,23 +172,27 @@ npm install
 Iniciar a API
 
 ```bash
-nodemon index.js
+npm run dev
 ```
 
-Pronto, agora podemos usar o endpoints
+Pronto, agora podemos usar a API
 
-Também podemos usar a API com o graphQL
+---
+
+### Documentação swagger da API
+
+(http://localhost:3005/swagger)
 
 ---
 
 ### FrameWorks Usados
-
 - express
 - nodemon
 - winston
-- express-graphql
-- graphql
+- cors
 - swagger-ui-express
+- graphql
+- express-graphql
 
 ---
 
@@ -102,11 +206,11 @@ Formato do arquivo accounts.json
   "pedidos": [
     {
       "id": 1,
-      "cliente": "Kenji",
-      "produto": "Pizza Calabresa",
-      "valor": 65,
+      "cliente": "Kenji Sakai",
+      "produto": "Pizza de 4 Queijo",
+      "valor": 80.85,
       "entregue": true,
-      "timestamp": "02/05/2021, 19:48:09"
+      "timestamp": "26/05/2023, 22:25:10"
     },
   ],
 }
