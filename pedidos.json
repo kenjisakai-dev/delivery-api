@@ -3999,7 +3999,7 @@
       "cliente": "Kenji Sakai",
       "produto": "Pizza Calabresa",
       "valor": 67.55,
-      "entregue": false,
+      "entregue": true,
       "timestamp": "27/05/2023, 03:21:52"
     }
   ]
