@@ -273,6 +273,51 @@ O banco de dados é representado como um array de objetos JSON. Cada objeto cont
 ### Pedidos do restaurante (Consulta GraphQL)
 
 <details>
+  <summary>createOrder - Consulta responsável por cadastrar um pedido</summary>
+
+#### **Parâmetros da Requisição**
+
+| **Tipo** | **Parâmetro** | **Descrição**            | **Obrigatório** |
+| -------- | ------------- | ------------------------ | --------------- |
+| body     | `client`      | Cliente que fez o pedido | Sim             |
+| body     | `product`     | Produto pedido           | Sim             |
+| body     | `value`       | Valor do pedido          | Sim             |
+
+#### **Consulta GraphQL**
+
+```
+mutation {
+  createOrder(order: {client: "Lavínia Dâmaso", product: "Pizza Muçarela", value: 26 }) {
+    id
+    client
+    product
+    value
+    status
+    timestamp
+  }
+}
+```
+
+#### **Resposta da Consulta**
+
+```json
+{
+    "data": {
+        "createOrder": {
+            "id": 1,
+            "client": "Lavínia Dâmaso",
+            "product": "Pizza Muçarela",
+            "value": 26,
+            "status": "PENDENTE",
+            "timestamp": "1734210306435"
+        }
+    }
+}
+```
+
+</details>
+
+<details>
   <summary>clientReport - Consulta responsável por gerar o relatório dos pedidos do cliente</summary>
 
 #### **Parâmetros da Requisição**
@@ -338,51 +383,6 @@ O banco de dados é representado como um array de objetos JSON. Cada objeto cont
                     "total": "R$ 32,50"
                 }
             ]
-        }
-    }
-}
-```
-
-</details>
-
-<details>
-  <summary>createOrder - Consulta responsável por cadastrar um pedido</summary>
-
-#### **Parâmetros da Requisição**
-
-| **Tipo** | **Parâmetro** | **Descrição**            | **Obrigatório** |
-| -------- | ------------- | ------------------------ | --------------- |
-| body     | `client`      | Cliente que fez o pedido | Sim             |
-| body     | `product`     | Produto pedido           | Sim             |
-| body     | `value`       | Valor do pedido          | Sim             |
-
-#### **Consulta GraphQL**
-
-```
-mutation {
-  createOrder(order: {client: "Lavínia Dâmaso", product: "Pizza Muçarela", value: 26 }) {
-    id
-    client
-    product
-    value
-    status
-    timestamp
-  }
-}
-```
-
-#### **Resposta da Consulta**
-
-```json
-{
-    "data": {
-        "createOrder": {
-            "id": 1,
-            "client": "Lavínia Dâmaso",
-            "product": "Pizza Muçarela",
-            "value": 26,
-            "status": "PENDENTE",
-            "timestamp": "1734210306435"
         }
     }
 }
