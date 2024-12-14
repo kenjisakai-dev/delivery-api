@@ -1,429 +1,381 @@
 export const swaggerDocument = {
-  swagger: '2.0',
-  info: {
-    title: 'Delivery API',
-    description: 'CRUD Delivery API',
-    version: '1.0.0',
-  },
-  host: 'localhost:3005',
-  tags: [
-    {
-      name: 'pedido',
-      description: 'gerenciamento de pedidos',
+    swagger: '2.0',
+    info: {
+        title: 'Delivery API',
+        version: '1.0.0',
     },
-  ],
-  paths: {
-    '/pedido': {
-      post: {
-        tags: ['pedido'],
-        summary: 'Criar pedido',
-        description: 'Crie um novo pedido com os parâmetros recebidos',
-        produces: ['application/json'],
-        parameters: [
-          {
-            in: 'body',
-            name: 'body',
-            description:
-              'Devemos passar os seguintes parâmetros para criar uma pedido',
-            required: true,
-            schema: {
-              properties: {
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Sakai',
+    host: 'localhost:3000',
+    basePath: '/api/v1',
+    tags: [
+        {
+            name: 'order',
+            description: 'Gerenciamento dos Pedidos',
+        },
+    ],
+    paths: {
+        '/order/create': {
+            post: {
+                tags: ['order'],
+                description: 'Endpoint responsável por cadastrar um pedido',
+                produces: ['application/json'],
+                parameters: [
+                    {
+                        in: 'body',
+                        name: 'body',
+                        required: true,
+                        schema: {
+                            properties: {
+                                client: {
+                                    type: 'string',
+                                    example: 'Lavínia Dâmaso',
+                                },
+                                product: {
+                                    type: 'string',
+                                    example: 'Pizza Muçarela',
+                                },
+                                value: {
+                                    type: 'number',
+                                    example: 26,
+                                },
+                            },
+                        },
+                    },
+                ],
+                responses: {
+                    201: {
+                        description: 'Created',
+                        schema: {
+                            properties: {
+                                id: {
+                                    type: 'integer',
+                                    example: 1,
+                                },
+                                client: {
+                                    type: 'string',
+                                    example: 'Lavínia Dâmaso',
+                                },
+                                product: {
+                                    type: 'string',
+                                    example: 'Pizza Muçarela',
+                                },
+                                value: {
+                                    type: 'number',
+                                    example: 26,
+                                },
+                                status: {
+                                    type: 'string',
+                                    example: 'PENDENTE',
+                                },
+                                timestamp: {
+                                    type: 'date',
+                                    example: '2021-05-02T19:48:09.765Z',
+                                },
+                            },
+                        },
+                    },
+                    400: {
+                        description: 'Bad Request',
+                    },
                 },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
-                },
-                valor: {
-                  type: 'number',
-                  example: 78.65,
-                },
-              },
             },
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              properties: {
+        },
+        '/order/clientReport?client={client}': {
+            get: {
+                tags: ['order'],
+                description:
+                    'Endpoint responsável por obter informações do proprietário',
+                produces: ['application/json'],
+                parameters: [
+                    {
+                        in: 'path',
+                        name: 'client',
+                        description: 'Cliente utilizado para gerar relatório',
+                        required: true,
+                        schema: {
+                            type: 'string',
+                            example: 'Lavínia Dâmaso',
+                        },
+                    },
+                ],
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            properties: {
+                                client: {
+                                    type: 'string',
+                                    example: 'Lavínia Dâmaso',
+                                },
+                                total_vendido: {
+                                    type: 'string',
+                                    example: 'R$ 113,00',
+                                },
+                                total_cancelado: {
+                                    type: 'string',
+                                    example: 'R$ 93,50',
+                                },
+                                total_pendente: {
+                                    type: 'string',
+                                    example: 'R$ 59,00',
+                                },
+                                total: {
+                                    type: 'string',
+                                    example: 'R$ 265,50',
+                                },
+                                produtos: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {
+                                            produto: {
+                                                type: 'string',
+                                                example: 'Pizza Napolitana',
+                                            },
+                                            quantidade: {
+                                                type: 'integer',
+                                                example: 3,
+                                            },
+                                            total: {
+                                                type: 'string',
+                                                example: 'R$ 84,00',
+                                            },
+                                        },
+                                    },
+                                    example: [
+                                        {
+                                            produto: 'Pizza Napolitana',
+                                            quantidade: 3,
+                                            total: 'R$ 84,00',
+                                        },
+                                        {
+                                            produto: 'Pizza a Moda',
+                                            quantidade: 2,
+                                            total: 'R$ 62,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Calabresa',
+                                            quantidade: 2,
+                                            total: 'R$ 61,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Pepperoni',
+                                            quantidade: 1,
+                                            total: 'R$ 32,50',
+                                        },
+                                        {
+                                            produto: 'Pizza Muçarela',
+                                            quantidade: 1,
+                                            total: 'R$ 26,00',
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                    400: {
+                        description: 'Bad Request',
+                    },
+                },
+            },
+        },
+        '/order/salesReport': {
+            get: {
+                tags: ['order'],
+                description:
+                    'Endpoint responsável por gerar o relatório de vendas do restaurante',
+                produces: ['application/json'],
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            properties: {
+                                client: {
+                                    type: 'string',
+                                    example: 'Cliente Exemplo',
+                                },
+                                total_vendido: {
+                                    type: 'string',
+                                    example: 'R$ 4.547,50',
+                                },
+                                total_cancelado: {
+                                    type: 'string',
+                                    example: 'R$ 5.336,50',
+                                },
+                                total_pendente: {
+                                    type: 'string',
+                                    example: 'R$ 4.959,00',
+                                },
+                                total: {
+                                    type: 'string',
+                                    example: 'R$ 14.843,00',
+                                },
+                                produtos: {
+                                    type: 'array',
+                                    items: {
+                                        type: 'object',
+                                        properties: {
+                                            produto: {
+                                                type: 'string',
+                                                example: 'Pizza Napolitana',
+                                            },
+                                            quantidade: {
+                                                type: 'integer',
+                                                example: 83,
+                                            },
+                                            total: {
+                                                type: 'string',
+                                                example: 'R$ 2.324,00',
+                                            },
+                                        },
+                                    },
+                                    example: [
+                                        {
+                                            produto: 'Pizza Napolitana',
+                                            quantidade: 83,
+                                            total: 'R$ 2.324,00',
+                                        },
+                                        {
+                                            produto: 'Pizza a Moda',
+                                            quantidade: 72,
+                                            total: 'R$ 2.232,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Atum',
+                                            quantidade: 68,
+                                            total: 'R$ 2.176,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Muçarela',
+                                            quantidade: 80,
+                                            total: 'R$ 2.080,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Pepperoni',
+                                            quantidade: 63,
+                                            total: 'R$ 2.047,50',
+                                        },
+                                        {
+                                            produto:
+                                                'Pizza Frango com Catupiry',
+                                            quantidade: 69,
+                                            total: 'R$ 2.001,00',
+                                        },
+                                        {
+                                            produto: 'Pizza Calabresa',
+                                            quantidade: 65,
+                                            total: 'R$ 1.982,50',
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    },
+                    400: {
+                        description: 'Bad Request',
+                    },
+                },
+            },
+        },
+        '/order/update': {
+            patch: {
+                tags: ['order'],
+                description: 'Endpoint responsável por atualizar o pedido',
+                produces: ['application/json'],
+                parameters: [
+                    {
+                        in: 'body',
+                        name: 'body',
+                        required: true,
+                        schema: {
+                            properties: {
+                                id: {
+                                    type: 'integer',
+                                    example: 1,
+                                },
+                                product: {
+                                    type: 'string',
+                                    example: 'Pizza Muçarela',
+                                },
+                                value: {
+                                    type: 'number',
+                                    example: 26,
+                                },
+                                status: {
+                                    type: 'string',
+                                    example: 'ENTREGUE',
+                                },
+                            },
+                        },
+                    },
+                ],
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            properties: {
+                                id: {
+                                    type: 'integer',
+                                    example: 1,
+                                },
+                                client: {
+                                    type: 'string',
+                                    example: 'Lavínia Dâmaso',
+                                },
+                                product: {
+                                    type: 'string',
+                                    example: 'Pizza Muçarela',
+                                },
+                                value: {
+                                    type: 'number',
+                                    example: 26,
+                                },
+                                status: {
+                                    type: 'string',
+                                    example: 'ENTREGUE',
+                                },
+                                timestamp: {
+                                    type: 'date',
+                                    example: '2021-05-02T19:48:09.765Z',
+                                },
+                            },
+                        },
+                    },
+                    400: {
+                        description: 'Bad Request',
+                    },
+                },
+            },
+        },
+    },
+    definitions: {
+        order: {
+            type: 'object',
+            properties: {
                 id: {
-                  type: 'number',
-                  example: 1,
+                    type: 'integer',
+                    example: 1,
                 },
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Sakai',
+                client: {
+                    type: 'string',
+                    example: 'Lavínia Dâmaso',
                 },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
+                product: {
+                    type: 'string',
+                    example: 'Pizza Muçarela',
                 },
-                valor: {
-                  type: 'number',
-                  example: 78.65,
+                value: {
+                    type: 'number',
+                    example: 26,
                 },
-                entregue: {
-                  type: 'boolean',
-                  example: false,
+                status: {
+                    type: 'string',
+                    example: 'ENTREGUE',
                 },
                 timestamp: {
-                  type: 'date',
-                  example: '26/05/2023, 22:25:10',
+                    type: 'date',
+                    example: '2021-05-02T19:48:09.765Z',
                 },
-              },
             },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
         },
-      },
-      put: {
-        tags: ['pedido'],
-        summary: 'Atualizar pedido existente',
-        description: 'Atualize o pedido com os parâmetros recebidos',
-        produces: ['application/json'],
-        parameters: [
-          {
-            in: 'body',
-            name: 'body',
-            description:
-              'Devemos passar os seguintes parâmetros para atualizar um pedido',
-            required: true,
-            schema: {
-              properties: {
-                id: {
-                  type: 'number',
-                  example: 1,
-                },
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Moura Sakai',
-                },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
-                },
-                valor: {
-                  type: 'number',
-                  example: 80.85,
-                },
-                entregue: {
-                  type: 'boolean',
-                  example: false,
-                },
-              },
-            },
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              properties: {
-                id: {
-                  type: 'number',
-                  example: 1,
-                },
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Moura Sakai',
-                },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
-                },
-                valor: {
-                  type: 'number',
-                  example: 80.85,
-                },
-                entregue: {
-                  type: 'boolean',
-                  example: false,
-                },
-                timestamp: {
-                  type: 'date',
-                  example: '26/05/2023, 22:25:10',
-                },
-              },
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
     },
-    '/pedido/entregue': {
-      patch: {
-        tags: ['pedido'],
-        summary: 'Atualizar o status de entrega de um pedido existente',
-        description:
-          'Atualize o status de entrega do pedido com os parâmetros recebidos',
-        produces: ['application/json'],
-        parameters: [
-          {
-            in: 'body',
-            name: 'body',
-            description:
-              'Devemos passar os seguintes parâmetros para atualizar o status de entrega do pedido',
-            required: true,
-            schema: {
-              properties: {
-                id: {
-                  type: 'number',
-                  example: 1,
-                },
-                entregue: {
-                  type: 'boolean',
-                  example: true,
-                },
-              },
-            },
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              properties: {
-                id: {
-                  type: 'number',
-                  example: 1,
-                },
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Moura Sakai',
-                },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
-                },
-                valor: {
-                  type: 'number',
-                  example: 80.85,
-                },
-                entregue: {
-                  type: 'boolean',
-                  example: true,
-                },
-                timestamp: {
-                  type: 'date',
-                  example: '26/05/2023, 22:25:10',
-                },
-              },
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-    '/pedido/cancelar/{id}': {
-      delete: {
-        tags: ['pedido'],
-        summary: 'Excluir pedido existente',
-        description: 'Devemos passar o parâmetro ID para cancelar pedido',
-        produces: ['application/json'],
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            description: 'Devemos passar o parâmetro ID para cancelar pedido',
-            required: true,
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              type: 'string',
-              example: 'O pedido de ID 2 foi deletada',
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-    '/pedido/{id}': {
-      get: {
-        tags: ['pedido'],
-        summary: 'Obter pedido existente',
-        description: 'Obter descrição do pedido existente',
-        produces: ['application/json'],
-        parameters: [
-          {
-            name: 'id',
-            in: 'path',
-            description: 'Devemos passar o parâmetro ID para obter pedido',
-            required: true,
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              type: 'object',
-              properties: {
-                id: {
-                  type: 'number',
-                  example: 1,
-                },
-                cliente: {
-                  type: 'string',
-                  example: 'Kenji Moura Sakai',
-                },
-                produto: {
-                  type: 'string',
-                  example: 'Pizza de 4 Queijo',
-                },
-                valor: {
-                  type: 'number',
-                  example: 80.85,
-                },
-                entregue: {
-                  type: 'boolean',
-                  example: true,
-                },
-                timestamp: {
-                  type: 'date',
-                  example: '26/05/2023, 22:25:10',
-                },
-              },
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-    '/pedido?cliente={cliente}': {
-      get: {
-        tags: ['pedido'],
-        summary: 'Obter valor total de pedidos entregues de um cliente',
-        description: 'Obter valor total de pedidos entregues de um cliente',
-        produces: ['application/json'],
-        parameters: [
-          {
-            in: 'path',
-            name: 'cliente',
-            description:
-              'Devemos passar a seguinte consulta para obter valor total de pedidos entregues de um cliente',
-            required: true,
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              type: 'object',
-              example: { total: 80.85 },
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-    '/pedido?produto={produto}': {
-      get: {
-        tags: ['pedido'],
-        summary: 'Obter valor total de pedidos entregues de um produto',
-        description: 'Obter valor total de pedidos entregues de um produto',
-        produces: ['application/json'],
-        parameters: [
-          {
-            in: 'path',
-            name: 'produto',
-            description:
-              'Devemos passar a seguinte consulta para obter valor total de pedidos entregues de um produto',
-            required: true,
-          },
-        ],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              type: 'object',
-              example: { total: 80.85 },
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-    '/pedido/produtos/mais/vendidos': {
-      get: {
-        tags: ['pedido'],
-        summary: 'Obter lista de produtos vendidos',
-        description: 'Obter descrição da lista de produtos vendidos',
-        produces: ['application/json'],
-        responses: {
-          200: {
-            description: 'Successful Operation',
-            schema: {
-              type: 'object',
-              example: [
-                'Pizza Napolitana - 78',
-                'Pizza Muçarela - 75',
-                'Pizza a Moda - 67',
-                'Pizza Frango com Catupiry - 66',
-                'Pizza Atum - 64',
-                'Pizza Calabresa - 59',
-                'Pizza Pepperoni - 57',
-                'abcde - 2',
-                'Pizza - 2',
-                'Pizza Grande GGG - 1',
-                'teste - 1',
-              ],
-            },
-          },
-          400: {
-            description: 'Error Occurred',
-          },
-        },
-      },
-    },
-  },
-  definitions: {
-    Pedido: {
-      type: 'object',
-      properties: {
-        id: {
-          type: 'integer',
-          example: 1,
-        },
-        cliente: {
-          type: 'string',
-          example: 'Kenji Moura Sakai',
-        },
-        produto: {
-          type: 'string',
-          example: 'Pizza de 4 Queijo',
-        },
-        valor: {
-          type: 'number',
-          example: 80.85,
-        },
-        entregue: {
-          type: 'boolean',
-          example: true,
-        },
-        timestamp: {
-          type: 'date',
-          example: '26/05/2023, 22:25:10',
-        },
-      },
-    },
-  },
 };
